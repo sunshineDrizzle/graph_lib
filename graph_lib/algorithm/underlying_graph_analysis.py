@@ -43,3 +43,22 @@ def get_distribution(graph, target, y_type='frequency'):
         raise ValueError('The {} is not supported at present'.format(y_type))
 
     return x, y
+
+
+def cc_degree_relationship(graph):
+    """
+    get the relationship between clustering coefficient and degree
+    :param graph: networkx.Graph
+    :return: (degree, cc)
+        degree includes degrees corresponding to graph's nodes
+        cc includes clustering coefficient corresponding to graph's nodes
+    """
+    degree_dict = nx.degree(graph)
+    cc_dict = nx.clustering(graph)
+
+    degree, cc = [], []
+    for key in graph.nodes():
+        degree.append(degree_dict[key])
+        cc.append(cc_dict[key])
+
+    return degree, cc
