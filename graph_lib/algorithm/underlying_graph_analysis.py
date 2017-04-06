@@ -2,6 +2,24 @@ import numpy as np
 import networkx as nx
 
 
+def get_distance(graph):
+    """
+    Get distance between each pair of nodes.
+    If there is no path between pair (i, j), regard the distance as np.inf
+    :param graph: network.Graph
+    :return: dictionary
+        distance between each pair of nodes
+    """
+    distance = dict()
+    for idx, i in enumerate(graph.nodes()):
+        for j in graph.nodes()[idx+1:]:
+            try:
+                distance[(i, j)] = nx.shortest_path_length(graph, i, j)
+            except nx.NetworkXNoPath:
+                distance[(i, j)] = np.inf
+    return distance
+
+
 def get_distribution(graph, target, y_type='frequency'):
     """
     get the distribution of graph's properties.
@@ -20,10 +38,7 @@ def get_distribution(graph, target, y_type='frequency'):
     elif target == 'cc':
         dictionary = nx.clustering(graph)
     elif target == 'distance':
-        dictionary = dict()
-        for idx, i in enumerate(graph.nodes()):
-            for j in graph.nodes()[idx+1:]:
-                dictionary[(i, j)] = nx.shortest_path_length(graph, i, j)
+        dictionary = get_distance(graph)
     else:
         raise ValueError('The {} is not a supported target at present.'.format(target))
     sequence = dictionary.values()

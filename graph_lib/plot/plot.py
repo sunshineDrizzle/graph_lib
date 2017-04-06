@@ -16,7 +16,6 @@ def xy_plot(x, y, style='normal', title='', xlabel='', ylabel='', save_path=None
     :param kwargs:
     :return:
     """
-    plt.figure()
     if style == 'normal':
         plt.plot(x, y, **kwargs)
     elif style == 'loglog':
