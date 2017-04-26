@@ -1,6 +1,5 @@
 import numpy as np
-from networkx import to_scipy_sparse_matrix
-from scipy.sparse import dia_matrix, linalg
+from scipy.sparse import linalg
 
 # FIXME uncouple the module from skimage's furture module
 from skimage.future.graph import _ncut_cy
